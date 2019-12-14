@@ -92,10 +92,10 @@ def make(target):
     class Class():
 
         def __init__(self, *args, **kwargs):
-            parent, child = Pipe()
-            kwargs = dict(_pipe=child, _target=target, **kwargs)
+            local, remote = Pipe()
+            kwargs = dict(_pipe=remote, _target=target, **kwargs)
             self._process = Process(target=run, args=args, kwargs=kwargs)
-            self._stub = Stub(parent)
+            self._stub = Stub(local)
 
         def __enter__(self):
             self._process.start()
